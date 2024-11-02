@@ -1,8 +1,9 @@
+import { Outlet } from "react-router-dom";
+
 const Cabinet = () => {
-    return(
-        <div>
-            <p>CABINET</p>
-        </div>
+    return(<div>
+        <Outlet/>
+    </div>
     )
 }
 export default Cabinet;
