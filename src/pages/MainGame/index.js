@@ -1,52 +1,47 @@
 import { randomQuestionsIndexes } from "../../core/functions/game";
 import { useEffect, useState } from "react";
 import { Button, Typography } from "antd";
-import Loading from "../../components/sheard/Loading";
-import { ROUTE_CONSTANTS } from "../../core/utilis/constants";
-import { useNavigate } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex } from "../../state_management/slice/gameSlice";
+import DefeatModal from "../../components/sheard/DefeatModal";
 const { Title } = Typography;
 
 const MainGame = () => {
-    const navigate = useNavigate();
-    const [ count, setCount ] = useState(0);
-    const [ submit, setSubmit ] = useState(false);
-    const [ questions, setQuestions ] = useState([]);
+    const { coins, questions, modalOpen, submit, questionIndex } = useSelector(store => store.GameSlice);
+    const dispatch = useDispatch();
+    console.log(questionIndex)
 
     const handleSubmit = (correct) => {
-        setSubmit(true);
-    if(correct){
-
-    }else{
-        alert('You didnt win');
-    }
-    };
-
-    useEffect(()=>{
-    setQuestions(randomQuestionsIndexes);
-    },[])
+        dispatch(changeSubmit(true));
+        if(correct){
+            dispatch(addCoins());
+        }else{
+            dispatch(changeModalOpen(true));    
+    }};
 
     useEffect(()=>{
-console.log(questions[count],count,questions)
-    },[count]);
+        dispatch(renderCoins());
+        dispatch(createQuestions(randomQuestionsIndexes()));
+    },[dispatch]);
 
- if (count >= questions.length) {
-       navigate(ROUTE_CONSTANTS.GAMEEND);
-       return count;
+    if (!questions || questions.length === 0) {
+        return <Title level={5}>Loading questions...</Title>;
     }
 
     return (<div>
-        <Title level={5}>{questions[count].question}</Title>  
+        <Title level={5}>{questions[questionIndex].question}</Title> 
+        {coins}
         <ul>
-            {questions[count].answers.map((answer, idx) => {
+            {questions[questionIndex].answers.map((answer, idx) => {
                 return(<li 
                 style={{backgroundColor: submit ? (answer.isCorrect ? 'green' : 'red') : 'white'}} 
                 onClick={() =>!submit && handleSubmit(answer.isCorrect)} key={idx}>
                     <Title level={5}>{answer.answer}</Title>            
                 </li>)
             })}
-        </ul>        
-        <Button onClick={() => {setCount(count+1);setSubmit(false)}}></Button> 
+        </ul>              
+        <Button type="primary" disabled={!submit} onClick={() => {dispatch(changeQuestionIndex());dispatch(changeSubmit(false))}}>Continue</Button> 
+        <DefeatModal open={modalOpen} onCancel={() => dispatch(changeModalOpen(false))}/>
     </div>)
 }
 

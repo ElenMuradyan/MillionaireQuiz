@@ -20,7 +20,7 @@ const Login = ({ setIsAuth }) => {
             form.resetFields();
             setLoading(false);
             setIsAuth(true);
-            navigate(ROUTE_CONSTANTS.CABINET);
+            navigate(ROUTE_CONSTANTS.GAMESTART);
         }catch(error){
             console.log(error);
             

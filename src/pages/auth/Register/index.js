@@ -23,7 +23,7 @@ const Register = () => {
             });
 
             form.resetFields();
-            navigate(ROUTE_CONSTANTS.LOGIN);
+            navigate(ROUTE_CONSTANTS.CABINET);
         }catch{
             notification.error({
                 message: 'Invalid Register Credentials'

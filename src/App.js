@@ -12,7 +12,6 @@ import { auth, db } from './services/firebase';
 import Loading from './components/sheard/Loading';
 import MainGame from './pages/MainGame';
 import GameStart from './pages/GameStart';
-import GameEnd from './pages/GameEnd';
 
 function App() {
   const [ isAuth, setIsAuth ] = useState(false);
@@ -50,9 +49,9 @@ function App() {
                       <Route path={ROUTE_CONSTANTS.REGISTER} element={isAuth? <Navigate to={ROUTE_CONSTANTS.CABINET}/> : <Register/>}/>
 
                       <Route path={ROUTE_CONSTANTS.CABINET} element={isAuth? <Cabinet/> : <Navigate to={ROUTE_CONSTANTS.LOGIN}/>}>
+                      <Route index element={<GameStart/>}/>
                         <Route path={ROUTE_CONSTANTS.GAMESTART} element={<GameStart/>}/>
                         <Route path={ROUTE_CONSTANTS.MAINGAME} element={<MainGame/>}/>      
-                        <Route path={ROUTE_CONSTANTS.GAMEEND} element={<GameEnd/>}></Route>
                       </Route>
                     </Route>
                   )
