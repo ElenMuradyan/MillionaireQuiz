@@ -19,31 +19,31 @@ const DefeatModal = ({ open, onCancel }) => {
 
     const handleDefeat = () => {
         switch(true){
-            case coins<5:
+            case coins<4:      
                 dispatch(changeMessage(`Better luck next time,${firstName}!`))
                 break;
-            case coins>=5 && coins<7:
+            case coins>=4 && coins<6:
                 dispatch(changeMessage(`Dear ${firstName} you gained 5000$,congrats:)`))
                 break;
-            case coins>=7 && coins<9:
+            case coins>=6 && coins<8:
                 dispatch(changeMessage(`Dear ${firstName} you gained 10000$,congrats:)`))
                 break;
-            case coins>=9 && coins<11:
+            case coins>=8 && coins<10:
                 dispatch(changeMessage(`Dear ${firstName} you gained 15000$,congrats:)`))
                 break;
-            case coins>=11 && coins<13:
+            case coins>=10 && coins<12:
                 dispatch(changeMessage(`Dear ${firstName} you gained 50000$,congrats:)`))
                 break;    
-            case coins === 14:
+            case coins === 12:
                 dispatch(changeMessage(`Dear ${firstName} you gained 100000$,congrats:)`))
                 break;
-            case coins === 15:
+            case coins === 13:
                 dispatch(changeMessage(`Dear ${firstName} you gained 250000$,congrats:)`))
                 break;
-            case coins === 16:
+            case coins === 14:
                 dispatch(changeMessage(`Dear ${firstName} you gained 500000$,congrats:)`))
                 break;
-            case coins === 17:
+            case coins === 15:
                 dispatch(changeMessage(`Congratulations, ${firstName}! You’ve hit the jackpot with a million coins!`));
                 break;
             default:

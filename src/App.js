@@ -13,6 +13,8 @@ import Loading from './components/sheard/Loading';
 import MainGame from './pages/MainGame';
 import GameStart from './pages/GameStart';
 
+import './styles/global.css';
+
 function App() {
   const [ isAuth, setIsAuth ] = useState(false);
   const [ loading, setLoading ] = useState(true);

@@ -13,6 +13,24 @@ export const FIRESTORE_PATH_NAMES = {
     REGISTER_USERS: 'registered_users'
 };
 
+export const moneyArray = [
+    {value:'500$', state: false },
+    {value:'1,000$', state: false },
+    {value:'2,000$', state: false },
+    {value:'3,000$', state: false },
+    {value:'5,000$', state: true },
+    {value:'7,500$', state: false },
+    {value:'10,000$', state: true },
+    {value:'12,500$', state: false },
+    {value:'15,000$', state: true },
+    {value:'25,000$', state: false },
+    {value:'50,000$', state: true },
+    {value:'100,000$', state: true },
+    {value:'250,000$', state: true },
+    {value:'500,000$', state: true },
+    {value:'$1 MILLION', state: true },
+]
+
 export const millionaireQuiz = [
     {
         question: "What is the capital of France?",

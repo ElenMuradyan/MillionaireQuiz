@@ -4,10 +4,11 @@ import { Button, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/gameSlice";
 import DefeatModal from "../../components/sheard/DefeatModal";
+import MoneyScore from "../../components/sheard/MoneyScore";
 const { Title } = Typography;
 
 const MainGame = () => {
-    const { questions, modalOpen, submit, questionIndex, fifty_fifty, fifty_fifty_clicked, changeQuestionClicked, trueAnswer } = useSelector(store => store.GameSlice);
+    const { coins ,questions, modalOpen, submit, questionIndex, fifty_fifty, fifty_fifty_clicked, changeQuestionClicked, trueAnswer } = useSelector(store => store.GameSlice);
     const dispatch = useDispatch();
 
     const handleSubmit = (correct) => {
@@ -52,7 +53,11 @@ const MainGame = () => {
     if (!questions || questions.length === 0 || !fifty_fifty) {
         return <Title level={5}>Loading questions...</Title>;
     }
-
+    if(coins === 15){
+        dispatch(changeModalOpen(true));
+    }
+    console.log(questions)
+console.log(coins)
     return (<div>
         <Title level={5}>{questions[questionIndex].question}</Title> 
         <ul>
@@ -69,7 +74,8 @@ const MainGame = () => {
         <Button disabled={fifty_fifty_clicked} onClick={handleFiftyFifty}>50/50</Button>
         <Button disabled={changeQuestionClicked} onClick={handleQuestionChange}>Change Question</Button>
         <Button disabled={trueAnswer} onClick={handleTrueAnswer}>True Answer</Button>
-        <Button type="primary" disabled={!submit} onClick={() => {dispatch(changeQuestionIndex());dispatch(changeSubmit(false));dispatch(changeFifty(questions[questionIndex].answers))}}>Continue</Button> 
+        <Button type="primary" disabled={!submit} onClick={() => {dispatch(changeQuestionIndex());dispatch(changeSubmit(false));dispatch(changeFifty(questions[questionIndex].answers));dispatch(setTrueAnswer(false))}}>Continue</Button> 
+        <MoneyScore/>
         <DefeatModal open={modalOpen} onCancel={() => dispatch(changeModalOpen(false))}/>
     </div>)
 }
