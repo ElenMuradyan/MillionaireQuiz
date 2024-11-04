@@ -65,6 +65,7 @@ const MainGame = () => {
         dispatch(changeModalOpen(true));
     }
 
+    console.log(questions)
 
     return (<Flex align="center" className="game_container" gap={20}> 
         <Flex className='Title_Container' align="center" justify="center">
@@ -84,10 +85,10 @@ const MainGame = () => {
             })}
         </ul>
         <Flex vertical gap={10} className="buttons">
-        <Flex gap={20}>
-        <Button disabled={fifty_fifty_clicked} onClick={handleFiftyFifty}>50/50</Button>
-        <Button disabled={changeQuestionClicked} onClick={handleQuestionChange}>Change Question</Button>
-        <Button disabled={trueAnswer} onClick={handleTrueAnswer}>True Answer</Button>
+        <Flex gap={20} style={{width:'50%'}}>
+        <Button disabled={fifty_fifty_clicked || submit} onClick={handleFiftyFifty}>50/50</Button>
+        <Button disabled={changeQuestionClicked || submit} onClick={handleQuestionChange}>Change Question</Button>
+        <Button disabled={trueAnswer || submit} onClick={handleTrueAnswer}>True Answer</Button>
         </Flex>
         <Button type="primary" style={{display: submit ? 'block' : 'none'}} onClick={() => handleContinue()}>Continue</Button>  
         </Flex>              

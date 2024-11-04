@@ -1,19 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+const initialState = {
+    coins: 0,
+    questions: [],
+    modalOpen: false,
+    submit: false,
+    questionIndex: 0,
+    message: '',
+    fifty_fifty: [],
+    fifty_fifty_clicked:false,
+    changeQuestionClicked: false,
+    trueAnswer: false
+};
 
 const gameSlice = createSlice({
     name:'gameSlice',
-    initialState:{
-        coins: 0,
-        questions: [],
-        modalOpen: false,
-        submit: false,
-        questionIndex: 0,
-        message: '',
-        fifty_fifty: [],
-        fifty_fifty_clicked:false,
-        changeQuestionClicked: false,
-        trueAnswer: false
-    },
+    initialState,
     reducers: {
         addCoins: state => {
             state.coins++;
@@ -48,16 +49,7 @@ const gameSlice = createSlice({
         setTrueAnswer: (state, action) => {
             state.trueAnswer = action.payload;
         },
-        render: (state, action) => {
-            state.coins = 0;
-            state.questions = action.payload;
-            state.modalOpen = false;
-            state.submit = false;
-            state.questionIndex = 0;
-            state.fifty_fifty = 1;
-            state.fifty_fifty_clicked = false;
-            state.changeQuestionClicked = false
-        }
+        render: () => initialState
     }
 })
 
