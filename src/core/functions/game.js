@@ -1,8 +1,9 @@
 import { millionaireQuiz } from "../utilis/constants";
+import { moneyArray } from "../utilis/constants";
 
 const randomQuestionsIndexes = () => {
     let indexes = [];
-    while(indexes.length < 16){
+    while(indexes.length < moneyArray.length){
         const randomIndex = Math.floor(Math.random() * millionaireQuiz.length);
         !indexes.includes(randomIndex) && indexes.push(randomIndex);
     }

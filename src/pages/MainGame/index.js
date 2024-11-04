@@ -1,10 +1,12 @@
 import { randomQuestionsIndexes } from "../../core/functions/game";
 import { useEffect } from "react";
-import { Button, Typography } from "antd";
+import { Button, Typography, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/gameSlice";
 import DefeatModal from "../../components/sheard/DefeatModal";
 import MoneyScore from "../../components/sheard/MoneyScore";
+import './index.css';
+
 const { Title } = Typography;
 
 const MainGame = () => {
@@ -39,6 +41,12 @@ const MainGame = () => {
         dispatch(changeFifty(trueAnswers))
     }
 
+    const handleContinue = () => {
+        dispatch(changeQuestionIndex());
+        dispatch(changeSubmit(false));
+        dispatch(changeFifty(questions[questionIndex].answers));
+    }
+
     useEffect(()=>{
         dispatch(renderCoins());
         dispatch(createQuestions(randomQuestionsIndexes()));
@@ -53,31 +61,42 @@ const MainGame = () => {
     if (!questions || questions.length === 0 || !fifty_fifty) {
         return <Title level={5}>Loading questions...</Title>;
     }
-    if(coins === 15){
+    if(coins === 11){
         dispatch(changeModalOpen(true));
     }
-    console.log(questions)
-console.log(coins)
-    return (<div>
-        <Title level={5}>{questions[questionIndex].question}</Title> 
-        <ul>
+
+
+    return (<Flex align="center" className="game_container" gap={20}> 
+        <Flex className='Title_Container' align="center" justify="center">
+        <Title level={3} style={{color:'white'}}>{questions[questionIndex].question}</Title> 
+        </Flex>
+        <div className='Ul_Container'>
+        <Flex gap={10} vertical>
+        <ul className="questions">
             {
            Array.isArray(fifty_fifty) && fifty_fifty.map((answer, idx) => {
                 return(
                 <li 
-                style={{backgroundColor: submit ? (answer.isCorrect ? 'green' : 'red') : 'white'}} 
+                style={{backgroundColor: submit ? (answer.isCorrect ? 'green' : 'red') : 'rgba(0, 0, 0, 0.739)'}} 
                 onClick={() =>!submit && handleSubmit(answer.isCorrect)} key={idx}>
-                    <Title level={5}>{answer.answer}</Title>  
+                    <Title level={5} style={{color:'white'}}>{answer.answer}</Title>  
                 </li>)
             })}
-        </ul>              
+        </ul>
+        <Flex vertical gap={10} className="buttons">
+        <Flex gap={20}>
         <Button disabled={fifty_fifty_clicked} onClick={handleFiftyFifty}>50/50</Button>
         <Button disabled={changeQuestionClicked} onClick={handleQuestionChange}>Change Question</Button>
         <Button disabled={trueAnswer} onClick={handleTrueAnswer}>True Answer</Button>
-        <Button type="primary" disabled={!submit} onClick={() => {dispatch(changeQuestionIndex());dispatch(changeSubmit(false));dispatch(changeFifty(questions[questionIndex].answers));dispatch(setTrueAnswer(false))}}>Continue</Button> 
+        </Flex>
+        <Button type="primary" style={{display: submit ? 'block' : 'none'}} onClick={() => handleContinue()}>Continue</Button>  
+        </Flex>              
+        </Flex>
+        </div>
         <MoneyScore/>
-        <DefeatModal open={modalOpen} onCancel={() => dispatch(changeModalOpen(false))}/>
-    </div>)
+        <DefeatModal open={modalOpen} onCancel={() => dispatch(changeModalOpen(false))}/>   
+        </Flex>
+    )
 }
 
 export default MainGame;

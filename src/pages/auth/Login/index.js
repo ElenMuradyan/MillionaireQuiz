@@ -4,6 +4,7 @@ import { ROUTE_CONSTANTS } from "../../../core/utilis/constants";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../services/firebase";
 import { useState } from "react";
+import Wrapper from "../../../components/sheard/Wrapper";
 
 const Login = ({ setIsAuth }) => {
     console.log(setIsAuth)
@@ -33,15 +34,18 @@ const Login = ({ setIsAuth }) => {
     }
 
     return (
-        <Form layout="vertical" onFinish={handleLogin} form={form}>
+        <Wrapper title='Sign In'>
+             <Form layout="vertical" onFinish={handleLogin} form={form} style={{fontSize:18}}>
             <Form.Item 
             label='Email'
             name="email"
             rules={[{
                 required:true,
                 message:'Please enter your email'
-            }]}>
-                <Input placeholder="Email" type="email"/>
+            }]}
+            className="formItem"
+            >
+                <Input placeholder="Email" type="email" className="Input"/>
             </Form.Item>
             <Form.Item
             label='Password'
@@ -50,12 +54,14 @@ const Login = ({ setIsAuth }) => {
                 required:true,
                 message:'Please enter your password'
             }]}
+            className="formItem"
             >
-                <Input.Password placeholder="Password"/>
+                <Input.Password placeholder="Password" className="Input"/>
             </Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading}>Sign In</Button>
-            <span>Don't have an account?</span><Link to={ROUTE_CONSTANTS.REGISTER}>Sign up</Link>
+            <Button type="primary" size="large" htmlType="submit" loading={loading}>Sign In</Button><br/>
+            <span style={{color:'white'}}>Don't have an account?</span><Link to={ROUTE_CONSTANTS.REGISTER}>Sign up</Link>
         </Form>
+        </Wrapper>
     )
 }
 

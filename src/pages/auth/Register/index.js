@@ -1,10 +1,11 @@
-import { Button, Flex, Form, Input, notification } from "antd"
+import { Button, Form, Input, notification } from "antd"
 import { FIRESTORE_PATH_NAMES, regexpValidation, ROUTE_CONSTANTS } from "../../../core/utilis/constants";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../services/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
+import Wrapper from "../../../components/sheard/Wrapper";
 
 const Register = () => {
     const [ form ] = Form.useForm(); 
@@ -33,16 +34,18 @@ const Register = () => {
         }
     }
 
-    return(<Flex>
-        <Form onFinish={handleRegister} form={form} layout="vertical">
+    return(<Wrapper title={'Sign Up'}>
+        <Form onFinish={handleRegister} form={form} layout="vertical" style={{fontSize:18}}>
             <Form.Item
             label='First Name'
             name='firstName'
             rules={[{
                 required:true,
                 message:'Please enter your first name'
-            }]}>
-                <Input placeholder="First Name" type="text"/>
+            }]}
+            className="formItem"
+            >
+                <Input placeholder="First Name" type="text" className="Input"/>
             </Form.Item>
             <Form.Item
             label='Last Name'
@@ -51,8 +54,9 @@ const Register = () => {
                 required:true,
                 message:'Please enter your last name'
             }]}
+            className="formItem"
             >
-                <Input placeholder="Last Name" type="text"/>
+                <Input placeholder="Last Name" type="text" className="Input"/>
             </Form.Item>
             <Form.Item
             label='Email'
@@ -61,8 +65,9 @@ const Register = () => {
                 required:true,
                 message:'Please enter your email'
             }]}
+            className="formItem"
             >
-                <Input placeholder="Email" type="email"/>
+                <Input placeholder="Email" type="email" className="Input"/>
             </Form.Item>
             <Form.Item
             label='Password'
@@ -76,32 +81,15 @@ const Register = () => {
                 pattern:regexpValidation,
                 message:'Wrong Password'
             }
-            ]}>
-                <Input.Password placeholder="Password"/>
+            ]}
+            className="formItem"
+            >
+                <Input.Password placeholder="Password" className="Input"/>
             </Form.Item>
-            <Form.Item 
-            label='Confirm Passsword'
-            name='confirm'
-            tooltip='The password must contain at least 6 to 16 characters, including at least one digit and one special character (e.g., !, @, #, $, %, ^, &, *).'
-            dependencies={['password']}
-            rules={[{
-                required:true,
-                message:'Wrong Password'
-            },
-            ({getFieldValue}) => ({
-                validator(_,value){
-                    if(!value||value===getFieldValue('password')){
-                        return Promise.resolve();
-                    }
-                    return Promise.reject(new Error('The new password that you entered does not match'));
-                }
-            })
-        ]}>
-            <Input.Password placeholder="Confirm Password"/>
-        </Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading}>Sign up</Button>
-        <span>Already have an account?</span><Link to={ROUTE_CONSTANTS.LOGIN}>Sign in</Link>
+        <Button size="large" type="primary" htmlType="submit" loading={loading}>Sign up</Button><br/>
+        <span style={{color:'white'}}>Already have an account?</span><Link to={ROUTE_CONSTANTS.LOGIN}>Sign in</Link>
         </Form>
-    </Flex>)
+    </Wrapper>
+    )
 }
 export default Register;

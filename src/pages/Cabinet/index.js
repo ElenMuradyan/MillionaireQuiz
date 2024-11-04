@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import { Flex } from "antd";
 
 const Cabinet = () => {
-    return(<div>
+    return(<Flex justify="center" align="center" style={{width:'100%',height:'100vh'}}>
         <Outlet/>
-    </div>
+    </Flex>
     )
 }
 export default Cabinet;

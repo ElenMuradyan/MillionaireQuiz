@@ -1,0 +1,26 @@
+.score_container > ul >  li{
+    width: 100%;
+    padding: 5px;   
+    margin: 10px 10px 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: rgb(255, 230, 0) 3px 3px 6px 0px inset, rgb(31, 1, 255) -3px -3px 6px 1px inset;    
+}
+.score_container{
+    height: 340px;
+}
+@media (max-width:760px) {
+    .score_container > ul{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    .score_container > ul >  li{
+        padding: 3px;   
+        margin: 5px;
+    }
+    .score_container{
+        width:100%;
+    }
+}

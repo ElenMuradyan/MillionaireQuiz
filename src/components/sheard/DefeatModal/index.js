@@ -1,5 +1,5 @@
 import { Modal, Typography, Button } from "antd";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../../context/authContextProvider";
 import { useNavigate } from "react-router-dom";
@@ -19,35 +19,20 @@ const DefeatModal = ({ open, onCancel }) => {
 
     const handleDefeat = () => {
         switch(true){
-            case coins<4:      
+            case coins<3:      
                 dispatch(changeMessage(`Better luck next time,${firstName}!`))
                 break;
-            case coins>=4 && coins<6:
+            case coins>=3 && coins<7:
                 dispatch(changeMessage(`Dear ${firstName} you gained 5000$,congrats:)`))
                 break;
-            case coins>=6 && coins<8:
+            case coins>=7 && coins<=10:
                 dispatch(changeMessage(`Dear ${firstName} you gained 10000$,congrats:)`))
                 break;
-            case coins>=8 && coins<10:
-                dispatch(changeMessage(`Dear ${firstName} you gained 15000$,congrats:)`))
-                break;
-            case coins>=10 && coins<12:
-                dispatch(changeMessage(`Dear ${firstName} you gained 50000$,congrats:)`))
-                break;    
-            case coins === 12:
-                dispatch(changeMessage(`Dear ${firstName} you gained 100000$,congrats:)`))
-                break;
-            case coins === 13:
-                dispatch(changeMessage(`Dear ${firstName} you gained 250000$,congrats:)`))
-                break;
-            case coins === 14:
-                dispatch(changeMessage(`Dear ${firstName} you gained 500000$,congrats:)`))
-                break;
-            case coins === 15:
-                dispatch(changeMessage(`Congratulations, ${firstName}! You’ve hit the jackpot with a million coins!`));
-                break;
-            default:
-                dispatch(changeMessage("Unexpected coin value."));
+                case coins === 11:
+                    dispatch(changeMessage(`Congratulations, ${firstName}! You’ve hit the jackpot with a million coins!`));
+                    break;
+                default:
+                    dispatch(changeMessage("Unexpected coin value."));
         }
     };
 
