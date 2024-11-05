@@ -43,14 +43,18 @@ li{
     border-radius: 12px;
     list-style-type: none;
 }
-@media (max-width:760px) {
+@media (max-width:1000px) {
     .game_container{
         flex-direction: column;
+        gap:0;
+        height: 100vh;
         width: 100%;
     }
     .Title_Container{
+        margin: 200px 0 0 0;
         width: 90%;
-        margin-bottom: 0;
+        padding: 15px;
+        height: auto;
     }
     .Ul_Conteiner{
         margin: 0;

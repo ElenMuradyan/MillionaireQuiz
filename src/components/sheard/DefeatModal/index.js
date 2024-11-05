@@ -47,7 +47,7 @@ const DefeatModal = ({ open, onCancel }) => {
     }
 
     return(<div className="modal">
-        <Modal maskClosable={false} title='Game Over' open={open} onCancel={onCancel} footer={[
+        <Modal maskClosable={false} closable={false} title='Game Over' open={open} onCancel={onCancel} footer={[
                 <Button key="home" type="primary" onClick={handleClose}>Home</Button>,
         ]}>
             <Title level={3}>{message}</Title>

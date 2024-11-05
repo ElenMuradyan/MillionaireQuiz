@@ -6,10 +6,6 @@ const initialState = {
     submit: false,
     questionIndex: 0,
     message: '',
-    fifty_fifty: [],
-    fifty_fifty_clicked:false,
-    changeQuestionClicked: false,
-    trueAnswer: false
 };
 
 const gameSlice = createSlice({
@@ -54,4 +50,4 @@ const gameSlice = createSlice({
 })
 
 export default gameSlice.reducer;
-export const { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, render, changeMessage, changeFiftyClicked, changeFifty, setChangeQuestionClicked, setTrueAnswer } = gameSlice.actions;
+export const { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, render, changeMessage } = gameSlice.actions;

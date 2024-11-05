@@ -2,7 +2,8 @@ import { randomQuestionsIndexes } from "../../core/functions/game";
 import { useEffect } from "react";
 import { Button, Typography, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/gameSlice";
+import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit } from "../../state_management/slice/gameSlice";
+import { changeQuestionIndex, changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/helperButtonsSlice"
 import DefeatModal from "../../components/sheard/DefeatModal";
 import MoneyScore from "../../components/sheard/MoneyScore";
 import './index.css';
@@ -10,7 +11,8 @@ import './index.css';
 const { Title } = Typography;
 
 const MainGame = () => {
-    const { coins ,questions, modalOpen, submit, questionIndex, fifty_fifty, fifty_fifty_clicked, changeQuestionClicked, trueAnswer } = useSelector(store => store.GameSlice);
+    const { coins, questions, modalOpen, submit, questionIndex } = useSelector(store => store.GameSlice);
+    const { fifty_fifty, fifty_fifty_clicked, changeQuestionClicked, trueAnswer } = useSelector(store => store.HelperButtonsSlice);
     const dispatch = useDispatch();
 
     const handleSubmit = (correct) => {
@@ -47,7 +49,7 @@ const MainGame = () => {
         dispatch(changeFifty(questions[questionIndex].answers));
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(renderCoins());
         dispatch(createQuestions(randomQuestionsIndexes()));
     },[dispatch]);
@@ -56,18 +58,19 @@ const MainGame = () => {
         if(questions[questionIndex]){        
             dispatch(changeFifty(questions[questionIndex].answers));
     }
-    },[questions,questionIndex,dispatch])
+    },[questions,questionIndex,dispatch]);
 
     if (!questions || questions.length === 0 || !fifty_fifty) {
         return <Title level={5}>Loading questions...</Title>;
-    }
+    };
+
     if(coins === 11){
         dispatch(changeModalOpen(true));
     }
 
     console.log(questions)
 
-    return (<Flex align="center" className="game_container" gap={20}> 
+    return (<Flex align="center" justify='center' className="game_container" gap={20}> 
         <Flex className='Title_Container' align="center" justify="center">
         <Title level={3} style={{color:'white'}}>{questions[questionIndex].question}</Title> 
         </Flex>
