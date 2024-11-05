@@ -1,18 +1,21 @@
 import { randomQuestionsIndexes } from "../../core/functions/game";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Button, Typography, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex } from "../../state_management/slice/gameSlice";
 import { changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/helperButtonsSlice"
 import DefeatModal from "../../components/sheard/DefeatModal";
+import { sendEmail } from "../../core/functions/emailLetter";
 import MoneyScore from "../../components/sheard/MoneyScore";
 import './index.css';
+import { AuthContext } from "../../context/authContextProvider";
 
 const { Title } = Typography;
 
 const MainGame = () => {
     const { coins, questions, modalOpen, submit, questionIndex } = useSelector(store => store.GameSlice);
     const { fifty_fifty, fifty_fifty_clicked, changeQuestionClicked, trueAnswer } = useSelector(store => store.HelperButtonsSlice);
+    const { email } = useContext(AuthContext);
     const dispatch = useDispatch();
 
     const handleSubmit = (correct) => {
@@ -21,6 +24,7 @@ const MainGame = () => {
             dispatch(addCoins());
         }else{
             dispatch(changeModalOpen(true));  
+            sendEmail(email, coins);
     }
 };
 
@@ -67,6 +71,7 @@ const MainGame = () => {
 
     if(coins === 11){
         dispatch(changeModalOpen(true));
+        sendEmail(email, coins);
     }
 
     console.log(questions)

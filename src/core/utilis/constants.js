@@ -13,6 +13,10 @@ export const FIRESTORE_PATH_NAMES = {
     REGISTER_USERS: 'registered_users'
 };
 
+export const MY_SERVICE_ID = 'service_3k4xqbc';
+export const MY_TEMPLATE_ID = 'template_6hjz4l6';
+export const MY_USER_ID = 'WUwPCeisjgZaQAV_0';
+
 export const moneyArray = [
     {value:'1,000$', state: false },
     {value:'3,000$', state: false },

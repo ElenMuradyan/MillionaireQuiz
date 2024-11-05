@@ -7,7 +7,6 @@ import { useState } from "react";
 import Wrapper from "../../../components/sheard/Wrapper";
 
 const Login = ({ setIsAuth }) => {
-    console.log(setIsAuth)
     const navigate = useNavigate();
     const [ form ] = Form.useForm();
     const [ loading, setLoading ] = useState(false);
