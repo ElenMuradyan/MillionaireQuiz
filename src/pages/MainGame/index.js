@@ -2,8 +2,8 @@ import { randomQuestionsIndexes } from "../../core/functions/game";
 import { useEffect } from "react";
 import { Button, Typography, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit } from "../../state_management/slice/gameSlice";
-import { changeQuestionIndex, changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/helperButtonsSlice"
+import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex } from "../../state_management/slice/gameSlice";
+import { changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/helperButtonsSlice"
 import DefeatModal from "../../components/sheard/DefeatModal";
 import MoneyScore from "../../components/sheard/MoneyScore";
 import './index.css';
@@ -20,8 +20,9 @@ const MainGame = () => {
         if(correct){
             dispatch(addCoins());
         }else{
-            dispatch(changeModalOpen(true));    
-    }};
+            dispatch(changeModalOpen(true));  
+    }
+};
 
     const handleFiftyFifty = () => {
         const currentQuestion = questions[questionIndex];
