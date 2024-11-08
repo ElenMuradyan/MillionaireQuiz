@@ -1,8 +1,7 @@
-import { randomQuestionsIndexes } from "../../core/functions/game";
 import { useContext, useEffect } from "react";
 import { Button, Typography, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex } from "../../state_management/slice/gameSlice";
+import { addCoins, changeModalOpen, changeSubmit, changeQuestionIndex } from "../../state_management/slice/gameSlice";
 import { changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/helperButtonsSlice"
 import DefeatModal from "../../components/sheard/DefeatModal";
 import { sendEmail } from "../../core/functions/emailLetter";
@@ -26,7 +25,7 @@ const MainGame = () => {
             dispatch(changeModalOpen(true));  
             sendEmail(email, coins);
     }
-};
+    };
 
     const handleFiftyFifty = () => {
         const currentQuestion = questions[questionIndex];
@@ -55,15 +54,10 @@ const MainGame = () => {
     }
 
     useEffect(() => {
-        dispatch(renderCoins());
-        dispatch(createQuestions(randomQuestionsIndexes()));
-    },[dispatch]);
-
-    useEffect(() => {
         if(questions[questionIndex]){        
             dispatch(changeFifty(questions[questionIndex].answers));
     }
-    },[questions,questionIndex,dispatch]);
+    },[questions, questionIndex, dispatch]);
 
     if (!questions || questions.length === 0 || !fifty_fifty) {
         return <Title level={5}>Loading questions...</Title>;
@@ -73,8 +67,6 @@ const MainGame = () => {
         dispatch(changeModalOpen(true));
         sendEmail(email, coins);
     }
-
-    console.log(questions)
 
     return (<Flex align="center" justify='center' className="game_container" gap={20}> 
         <Flex className='Title_Container' align="center" justify="center">
