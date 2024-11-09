@@ -3,7 +3,7 @@ const initialState = {
     fifty_fifty: [],
     fifty_fifty_clicked:false,
     changeQuestionClicked: false,
-    trueAnswer: false
+    trueAnswer: false,
 };
 
 const HelperButtonsSlice = createSlice({

@@ -1,57 +1,36 @@
 import { useContext, useEffect } from "react";
-import { Button, Typography, Flex } from "antd";
+import { Typography, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addCoins, changeModalOpen, changeSubmit, changeQuestionIndex } from "../../state_management/slice/gameSlice";
-import { changeFifty, changeFiftyClicked, setChangeQuestionClicked, setTrueAnswer } from "../../state_management/slice/helperButtonsSlice"
+import { addCoins, changeModalOpen, changeSubmit, setChoosenAnswer } from "../../state_management/slice/gameSlice";
+import { changeFifty } from "../../state_management/slice/helperButtonsSlice"
 import DefeatModal from "../../components/sheard/DefeatModal";
 import { sendEmail } from "../../core/functions/emailLetter";
 import MoneyScore from "../../components/sheard/MoneyScore";
 import './index.css';
 import { AuthContext } from "../../context/authContextProvider";
+import Buttons from "../../components/sheard/Buttons";
+import { addQuestion } from "../../core/functions/sendDataToBackend";
+import { getTrueAnswer } from "../../core/functions/getTrueAnswer";
 
 const { Title } = Typography;
 
 const MainGame = () => {
-    const { coins, questions, modalOpen, submit, questionIndex } = useSelector(store => store.GameSlice);
-    const { fifty_fifty, fifty_fifty_clicked, changeQuestionClicked, trueAnswer } = useSelector(store => store.HelperButtonsSlice);
-    const { email } = useContext(AuthContext);
+    const { coins, questions, modalOpen, submit, questionIndex, quizId, choosenAnswer } = useSelector(store => store.GameSlice);
+    const { fifty_fifty } = useSelector(store => store.HelperButtonsSlice);
+    const { email, uid } = useContext(AuthContext);
     const dispatch = useDispatch();
 
     const handleSubmit = (correct) => {
         dispatch(changeSubmit(true));
         if(correct){
             dispatch(addCoins());
+            addQuestion(uid, questions[questionIndex].question, getTrueAnswer(fifty_fifty), quizId);
         }else{
+            addQuestion(uid, questions[questionIndex].question, fifty_fifty[choosenAnswer], quizId);
             dispatch(changeModalOpen(true));  
             sendEmail(email, coins);
     }
     };
-
-    const handleFiftyFifty = () => {
-        const currentQuestion = questions[questionIndex];
-        let trueAnswers = currentQuestion.answers.filter(answer => answer.isCorrect);
-        let wrongAnswers = currentQuestion.answers.filter(answer => !answer.isCorrect);
-        dispatch(changeFifty(wrongAnswers.slice(0,1).concat(trueAnswers)));
-        dispatch(changeFiftyClicked(true));
-    };
-
-    const handleQuestionChange = () => {
-        dispatch(setChangeQuestionClicked(true));
-        dispatch(changeQuestionIndex());
-    };
-
-    const handleTrueAnswer = () => {
-        const currentQuestion = questions[questionIndex];
-        let trueAnswers = currentQuestion.answers.filter(answer => answer.isCorrect);
-        dispatch(setTrueAnswer(true));
-        dispatch(changeFifty(trueAnswers))
-    }
-
-    const handleContinue = () => {
-        dispatch(changeQuestionIndex());
-        dispatch(changeSubmit(false));
-        dispatch(changeFifty(questions[questionIndex].answers));
-    }
 
     useEffect(() => {
         if(questions[questionIndex]){        
@@ -60,7 +39,7 @@ const MainGame = () => {
     },[questions, questionIndex, dispatch]);
 
     if (!questions || questions.length === 0 || !fifty_fifty) {
-        return <Title level={5}>Loading questions...</Title>;
+        return <Title level={5}>Loading questions...</Title>
     };
 
     if(coins === 11){
@@ -80,19 +59,14 @@ const MainGame = () => {
                 return(
                 <li 
                 style={{backgroundColor: submit ? (answer.isCorrect ? 'green' : 'red') : 'rgba(0, 0, 0, 0.739)'}} 
-                onClick={() =>!submit && handleSubmit(answer.isCorrect)} key={idx}>
+                onClick={() => {!submit && handleSubmit(answer.isCorrect);
+                dispatch(setChoosenAnswer(idx))}}
+                key={idx}>
                     <Title level={5} style={{color:'white'}}>{answer.answer}</Title>  
                 </li>)
             })}
         </ul>
-        <Flex vertical gap={10} className="buttons">
-        <Flex gap={20} style={{width:'50%'}}>
-        <Button disabled={fifty_fifty_clicked || submit} onClick={handleFiftyFifty}>50/50</Button>
-        <Button disabled={changeQuestionClicked || submit} onClick={handleQuestionChange}>Change Question</Button>
-        <Button disabled={trueAnswer || submit} onClick={handleTrueAnswer}>True Answer</Button>
-        </Flex>
-        <Button type="primary" style={{display: submit ? 'block' : 'none'}} onClick={() => handleContinue()}>Continue</Button>  
-        </Flex>              
+        <Buttons/>
         </Flex>
         </div>
         <MoneyScore/>

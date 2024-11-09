@@ -6,6 +6,8 @@ const initialState = {
     submit: false,
     questionIndex: 0,
     message: '',
+    quizId: new Date().getTime().toString(),
+    choosenAnswer:0
 };
 
 const gameSlice = createSlice({
@@ -45,9 +47,15 @@ const gameSlice = createSlice({
         setTrueAnswer: (state, action) => {
             state.trueAnswer = action.payload;
         },
+        setQuizId: (state) => {
+            state.quizId = new Date().getTime().toString();
+        },
+        setChoosenAnswer: (state, action) => {
+            state.choosenAnswer = action.payload;
+        },
         render: () => initialState
     }
 })
 
 export default gameSlice.reducer;
-export const { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, render, changeMessage } = gameSlice.actions;
+export const { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, render, changeMessage, setQuizId, setChoosenAnswer } = gameSlice.actions;

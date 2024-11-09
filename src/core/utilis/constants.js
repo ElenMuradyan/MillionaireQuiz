@@ -10,7 +10,8 @@ export const ROUTE_CONSTANTS={
 };
 
 export const FIRESTORE_PATH_NAMES = {
-    REGISTER_USERS: 'registered_users'
+    REGISTER_USERS: 'registered_users',
+    QUIZZES: 'quizzes'
 };
 
 export const MY_SERVICE_ID = 'service_3k4xqbc';

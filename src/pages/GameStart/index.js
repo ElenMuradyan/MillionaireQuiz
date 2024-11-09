@@ -3,17 +3,21 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/authContextProvider";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_CONSTANTS } from "../../core/utilis/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Wrapper from "../../components/sheard/Wrapper";
 import { createQuestions, render } from "../../state_management/slice/gameSlice";
 import { ButtonsRender } from "../../state_management/slice/helperButtonsSlice";
 import { randomQuestionsIndexes } from "../../core/functions/game";
+import { createQuestionDoc, cleanQuizzes } from "../../core/functions/sendDataToBackend";
+import { setQuizId } from "../../state_management/slice/gameSlice";
+
 const { Title } = Typography;
 
 const GameStart = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { firstName } = useContext(AuthContext);
+    const { quizId } = useSelector(store => store.GameSlice);
+    const { firstName, uid } = useContext(AuthContext);
 
     const handleStartGame = () => {
         dispatch(render());
@@ -22,6 +26,10 @@ const GameStart = () => {
         
         localStorage.clear();
         navigate(ROUTE_CONSTANTS.MAINGAME);
+        dispatch(setQuizId());
+        console.log(quizId)
+        cleanQuizzes(uid)
+        createQuestionDoc(uid, quizId);
     };
 
     return (

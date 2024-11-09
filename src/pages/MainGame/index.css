@@ -26,12 +26,6 @@
     color: white;
     box-shadow: rgb(255, 230, 0) 3px 3px 6px 0px inset, rgb(31, 1, 255) -3px -3px 6px 1px inset;    
 }
-.buttons{
-    border-radius: 12px;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.739);
-    box-shadow: rgb(255, 230, 0) 3px 3px 6px 0px inset, rgb(31, 1, 255) -3px -3px 6px 1px inset;    
-}
 ul{
     width: 100%;
 }
