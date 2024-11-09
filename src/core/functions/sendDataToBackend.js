@@ -1,4 +1,4 @@
-import { doc, setDoc, collection, increment, arrayUnion, deleteDoc, getDocs, where, query } from "firebase/firestore";
+import { doc, setDoc, collection, increment, arrayUnion, deleteDoc, getDocs, where, query, getDoc } from "firebase/firestore";
 import { FIRESTORE_PATH_NAMES } from "../utilis/constants";
 import { db } from '../../services/firebase';
 
@@ -55,5 +55,24 @@ export const cleanQuizzes = async ( uid ) => {
         }
     }catch{
         console.error("Error cleaning up quizzes: ");
+    }
+}
+
+export const getUserCoins = async (uid) => {
+    const userRef = doc(db, FIRESTORE_PATH_NAMES.REGISTER_USERS, uid);
+
+    try{
+        const docSnap = await getDoc(userRef);
+
+        if(docSnap.exists()){
+            const userData = docSnap.data();
+            const coins = userData.coins || 0;
+            return coins;
+        }else{
+            return 0;
+        }
+    }catch(error){
+        console.error("Error fetching user coins:", error);
+        return 0;
     }
 }

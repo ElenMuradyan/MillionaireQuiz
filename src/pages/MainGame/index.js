@@ -17,18 +17,18 @@ const { Title } = Typography;
 const MainGame = () => {
     const { coins, questions, modalOpen, submit, questionIndex, quizId, choosenAnswer } = useSelector(store => store.GameSlice);
     const { fifty_fifty } = useSelector(store => store.HelperButtonsSlice);
-    const { email, uid } = useContext(AuthContext);
+    const { userProfileInfo } = useContext(AuthContext);
     const dispatch = useDispatch();
 
     const handleSubmit = (correct) => {
         dispatch(changeSubmit(true));
         if(correct){
             dispatch(addCoins());
-            addQuestion(uid, questions[questionIndex].question, getTrueAnswer(fifty_fifty), quizId);
+            addQuestion(userProfileInfo.uid, questions[questionIndex].question, getTrueAnswer(fifty_fifty), quizId);
         }else{
-            addQuestion(uid, questions[questionIndex].question, fifty_fifty[choosenAnswer], quizId);
+            addQuestion(userProfileInfo.uid, questions[questionIndex].question, fifty_fifty[choosenAnswer], quizId);
             dispatch(changeModalOpen(true));  
-            sendEmail(email, coins);
+            sendEmail(userProfileInfo.email, coins);
     }
     };
 
@@ -44,7 +44,7 @@ const MainGame = () => {
 
     if(coins === 11){
         dispatch(changeModalOpen(true));
-        sendEmail(email, coins);
+        sendEmail(userProfileInfo.email, coins);
     }
 
     return (<Flex align="center" justify='center' className="game_container" gap={20}> 

@@ -43,7 +43,7 @@ const DefeatModal = ({ open, onCancel }) => {
 
     const handleClose = () => {
         navigate(ROUTE_CONSTANTS.GAMESTART);
-        dispatch(render(randomQuestionsIndexes()));
+        dispatch(render());
     }
 
     return(<div className="modal">

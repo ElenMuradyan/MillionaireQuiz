@@ -6,8 +6,10 @@ import './index.css';
 const { Title } = Typography;
 const MoneyScore = () => {
     const { coins } = useSelector(store => store.GameSlice);
+    const { language } = useSelector(store => store.LanguageSlice);
+
 return(<div className="score_container" >
-    <Title level={2} style={{color:'white', textAlign:'center', margin: 0}}>Your Score</Title>
+    <Title level={2} style={{color:'white', textAlign:'center', margin: 0}}>{language === 'en' ? 'Your Score' : 'Ձեր առաջընթացը'}</Title>
     <ul>
         {moneyArray.map((score, idx) => {
             return(

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
     coins: 0,
     questions: [],
@@ -7,7 +8,8 @@ const initialState = {
     questionIndex: 0,
     message: '',
     quizId: new Date().getTime().toString(),
-    choosenAnswer:0
+    choosenAnswer:0,
+    language: 'hy'
 };
 
 const gameSlice = createSlice({
@@ -53,9 +55,12 @@ const gameSlice = createSlice({
         setChoosenAnswer: (state, action) => {
             state.choosenAnswer = action.payload;
         },
+        changeLanguage: (state, action) => {
+            state.language = action.payload
+        },
         render: () => initialState
     }
 })
 
 export default gameSlice.reducer;
-export const { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, render, changeMessage, setQuizId, setChoosenAnswer } = gameSlice.actions;
+export const { addCoins, renderCoins, createQuestions, changeModalOpen, changeSubmit, changeQuestionIndex, render, changeMessage, setQuizId, setChoosenAnswer, changeLanguage } = gameSlice.actions;

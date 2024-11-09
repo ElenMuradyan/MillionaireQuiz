@@ -1,5 +1,6 @@
 import GameSlice from '../slice/gameSlice';
 import HelperButtonsSlice from '../slice/helperButtonsSlice';
+import LanguageSlice from '../slice/LanguageSlice'
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
@@ -21,6 +22,7 @@ export const store = configureStore({
     reducer: {
         GameSlice: persistedGameSlice,
         HelperButtonsSlice: persistedHelperButtonsSlice,
+        LanguageSlice,
     }
 });
 

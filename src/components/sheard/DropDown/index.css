@@ -1,0 +1,4 @@
+.user_profile_avatar{
+    cursor: pointer;
+    background: linear-gradient(rgba(21, 0, 255, 0.8), rgb(0, 145, 255));
+}    
