@@ -1,14 +1,15 @@
 import { doc, setDoc, collection, increment, arrayUnion, deleteDoc, getDocs, where, query, getDoc } from "firebase/firestore";
-import { FIRESTORE_PATH_NAMES } from "../utilis/constants";
+import { FIRESTORE_PATH_NAMES, moneyArray } from "../utilis/constants";
 import { db } from '../../services/firebase';
 
 export const createQuestionDoc = async ( uid, quizId ) => {
     const userRef = doc(db, FIRESTORE_PATH_NAMES.REGISTER_USERS, uid);
-    const quizRef = doc(collection(userRef, "quizzes"), quizId);
+    const quizRef = doc(collection(userRef, FIRESTORE_PATH_NAMES.QUIZZES), quizId);
 
     const quizDoc = {
         questions: [],
         coins: 0,
+        money: 0
     };
     try{
         await setDoc(quizRef, quizDoc);
@@ -18,17 +19,17 @@ export const createQuestionDoc = async ( uid, quizId ) => {
     }
 }
 
-export const addQuestion = async ( uid, question, trueAnswer, quizId ) => {
+export const addQuestion = async ( uid, question, trueAnswer, quizId, currentCoins, isTrue ) => {
     const userRef = doc(db, FIRESTORE_PATH_NAMES.REGISTER_USERS, uid);
     const quizRef = doc(collection(userRef, FIRESTORE_PATH_NAMES.QUIZZES), quizId);
-    const userDocRef = doc(db, FIRESTORE_PATH_NAMES.REGISTER_USERS, uid);
-    try{
+
+    try{ 
         await setDoc(quizRef, {
             questions: arrayUnion({ [question]: trueAnswer}),
-            coins: increment(1)
             }, {merge: true});
-        await setDoc(userDocRef, {
-            coins: increment(1)
+        await setDoc(userRef, {
+            coins: increment(isTrue ? 1 : 0),
+            money: increment(moneyArray[currentCoins].state ? moneyArray[currentCoins].money : 0)
         },{merge: true})
     }catch(error){
         console.error("Error adding question:", error);
@@ -58,7 +59,7 @@ export const cleanQuizzes = async ( uid ) => {
     }
 }
 
-export const getUserCoins = async (uid) => {
+export const getUserCoinsandMoney = async (uid) => {
     const userRef = doc(db, FIRESTORE_PATH_NAMES.REGISTER_USERS, uid);
 
     try{
@@ -67,7 +68,9 @@ export const getUserCoins = async (uid) => {
         if(docSnap.exists()){
             const userData = docSnap.data();
             const coins = userData.coins || 0;
-            return coins;
+            const money = userData.money || 0;
+            console.log(money)
+            return [coins, money];
         }else{
             return 0;
         }

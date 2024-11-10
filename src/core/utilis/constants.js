@@ -26,15 +26,15 @@ export const MY_USER_ID = 'WUwPCeisjgZaQAV_0';
 export const moneyArray = [
     {value:'1,000$', state: false },
     {value:'3,000$', state: false },
-    {value:'5,000$', state: true },
+    {value:'5,000$', state: true, money: 5000 },
     {value:'15,000$', state: false },
     {value:'20,000$', state: false },
     {value:'25,000$', state: false },
-    {value:'50,000$', state: true },
+    {value:'50,000$', state: true, money: 50000 },
     {value:'100,000$', state: false },
     {value:'250,000$', state: false },
     {value:'500,000$', state: false },
-    {value:'$1 MILLION', state: true },
+    {value:'$1 MILLION', state: true, money: 1000000 },
 ]
 
 export const millionaireQuiz = {
@@ -1329,10 +1329,10 @@ export const millionaireQuiz = {
     {
         "question": "Ո՞ր մրգում են սերմերը կեղևի վրա:",
         "answers": [
-            { "answer": "Սթրաբերին", "isCorrect": true },
-            { "answer": "Ադամի", "isCorrect": false },
-            { "answer": "Մրգոլոր", "isCorrect": false },
-            { "answer": "Թալարակագույ", "isCorrect": false }
+            { "answer": "Ելակ", "isCorrect": true },
+            { "answer": "Ռամբուտան", "isCorrect": false },
+            { "answer": "Կիվանո", "isCorrect": false },
+            { "answer": "Կարամբոլա", "isCorrect": false }
         ]
     },
     {

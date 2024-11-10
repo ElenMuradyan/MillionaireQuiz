@@ -40,7 +40,7 @@ function App() {
 
   return (
     <Loading loading={loading}>
-    <AuthContext.Provider value={{userProfileInfo, setIsAuth}}>
+    <AuthContext.Provider value={{userProfileInfo, setIsAuth, isAuth}}>
           <RouterProvider
               router={
                 createBrowserRouter(

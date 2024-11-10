@@ -24,7 +24,7 @@ const MainGame = () => {
         dispatch(changeSubmit(true));
         if(correct){
             dispatch(addCoins());
-            addQuestion(userProfileInfo.uid, questions[questionIndex].question, getTrueAnswer(fifty_fifty), quizId);
+            addQuestion(userProfileInfo.uid, questions[questionIndex].question, getTrueAnswer(fifty_fifty), quizId, coins, true);
         }else{
             addQuestion(userProfileInfo.uid, questions[questionIndex].question, fifty_fifty[choosenAnswer], quizId);
             dispatch(changeModalOpen(true));  
@@ -49,7 +49,7 @@ const MainGame = () => {
 
     return (<Flex align="center" justify='center' className="game_container" gap={20}> 
         <Flex className='Title_Container' align="center" justify="center">
-        <Title level={3} style={{color:'white'}}>{questions[questionIndex].question}</Title> 
+        <Title level={4} style={{color:'white'}}>{questions[questionIndex].question}</Title> 
         </Flex>
         <div className='Ul_Container'>
         <Flex gap={10} vertical>

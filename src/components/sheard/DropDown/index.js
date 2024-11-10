@@ -3,22 +3,25 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from '../../../services/firebase'
 import { ROUTE_CONSTANTS } from "../../../core/utilis/constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AuthContext } from "../../../context/authContextProvider";
 import { useContext, useEffect, useState } from "react";
-import { getUserCoins } from "../../../core/functions/sendDataToBackend";
+import { getUserCoinsandMoney } from "../../../core/functions/sendDataToBackend";
 import { useLocation } from "react-router-dom";
+
 import './index.css';
+
 const { Text } = Typography;
 const { useToken } = theme; 
 
 const DropDown = () => {
-    const { userProfileInfo, setIsAuth } = useContext(AuthContext);
+    const { userProfileInfo, setIsAuth, isAuth } = useContext(AuthContext);
     const [ isinMain, setIsInMine ] = useState(false);
     const location = useLocation();
     const { submit } = useSelector(store => store.GameSlice);
     const { language } = useSelector(store => store.LanguageSlice);
     const [coins, setCoins] = useState(0);
+    const [money, setMoney] = useState(0);
     const { token } = useToken();
     const navigate = useNavigate();
 
@@ -32,7 +35,7 @@ const DropDown = () => {
     };
 
     const items = [
-       !isinMain && {
+       isinMain && {
             label:language === 'en' ? 'Cancel The Current Game' : 'Դադարեցնել ներկայիս խաղը',
             key:'0',
             onClick:() => navigate(ROUTE_CONSTANTS.GAMESTART)
@@ -45,7 +48,7 @@ const DropDown = () => {
     ]
 
     useEffect(()=>{
-        setIsInMine(location.pathname === '/cabinet/gamestart');
+        setIsInMine(location.pathname === '/cabinet/maingame');
     }, [location.pathname])
 
     const getFullNameLetter = ({firstName, lastName}) => {
@@ -58,14 +61,15 @@ const DropDown = () => {
     useEffect(() => {
         const fetchedCoins = async () => {
             try{
-                const userCoins = await getUserCoins(userProfileInfo.uid);
-                setCoins(userCoins);
+                const userCoinsAndMoney = await getUserCoinsandMoney(userProfileInfo.uid);
+                setCoins(userCoinsAndMoney[0]);
+                setMoney(userCoinsAndMoney[1]);
             }catch(error){
                 console.error(error)
             }
         }
         fetchedCoins();
-    },[submit])
+    },[submit, isAuth])
 
     return (
         <Dropdown 
@@ -85,6 +89,7 @@ const DropDown = () => {
                         <Text style={{color:'white'}}>{userProfileInfo.firstName} {userProfileInfo.lastName}</Text>
                         <Text type="secondary" underline style={{color:'white'}}>{userProfileInfo.email}</Text>
                         <Text style={{color:'white'}}>{language === 'en' ? 'Your Coins' : 'Ձեր միավորները'}:{coins}</Text>
+                        <Text style={{color:'white'}}>{language === 'en' ? 'Your Money' : 'Ձեր գումարը'}:{money}$</Text>
                     </Flex>
                     {menu}
                 </div>

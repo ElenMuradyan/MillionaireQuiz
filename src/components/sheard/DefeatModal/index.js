@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { ROUTE_CONSTANTS } from "../../../core/utilis/constants";
 import { useDispatch } from "react-redux";
 import { changeMessage, render } from "../../../state_management/slice/gameSlice";
-import { randomQuestionsIndexes } from "../../../core/functions/game";
 
 const { Title } = Typography;
 
@@ -16,19 +15,21 @@ const DefeatModal = ({ open, onCancel }) => {
     const { firstName } = useContext(AuthContext);
     const { coins } = useSelector(store => store.GameSlice);
     const navigate = useNavigate();
+    const { language } = useSelector(store => store.LanguageSlice);
+
     const handleDefeat = useCallback(() => {
         switch(true) {
             case coins < 3:
-                dispatch(changeMessage(`Better luck next time, ${firstName}!`));
+                dispatch(changeMessage(language ==='en' ? `Better luck next time, ${firstName}!` : 'Փորձիր ևս մեկ անգամ։'));
                 break;
             case coins >= 3 && coins < 7:
-                dispatch(changeMessage(`Dear ${firstName}, you gained 5000$, congrats :)`));
+                dispatch(changeMessage(language ==='en' ? `Dear ${firstName}, you gained 5000$, congrats :)` : `Սիրելի ${firstName} դու վաստակեցիր 5000$`));
                 break;
             case coins >= 7 && coins <= 10:
-                dispatch(changeMessage(`Dear ${firstName}, you gained 10000$, congrats :)`));
+                dispatch(changeMessage(language ==='en' ? `Dear ${firstName}, you gained 10000$, congrats :)` : `Սիրելի ${firstName} դու վաստակեցիր 10000$`));
                 break;
             case coins === 11:
-                dispatch(changeMessage(`Congratulations, ${firstName}! You’ve hit the jackpot with a million coins!`));
+                dispatch(changeMessage(language ==='en' ? `Congratulations, ${firstName}! You’ve hit the jackpot with a million coins!` : `Շնորհավորում եմ, դուք շահեցիք միլիոնը։`));
                 break;
             default:
                 dispatch(changeMessage("Unexpected coin value."));
