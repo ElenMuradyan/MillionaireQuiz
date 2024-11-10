@@ -3,7 +3,6 @@ import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import { FIRESTORE_PATH_NAMES, ROUTE_CONSTANTS } from './core/utilis/constants';
 import MainLayout from './layouts/MainLayout';
-import Cabinet from './pages/Cabinet';
 import { useCallback, useEffect, useState } from 'react';
 import { AuthContext } from './context/authContextProvider';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -12,6 +11,7 @@ import { auth, db } from './services/firebase';
 import Loading from './components/sheard/Loading';
 import MainGame from './pages/MainGame';
 import GameStart from './pages/GameStart';
+import Cabinet from './layouts/Cabinet';
 
 import './styles/global.css';
 

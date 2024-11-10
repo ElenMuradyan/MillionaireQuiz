@@ -15,8 +15,12 @@
     box-shadow: rgb(255, 230, 0) 3px 3px 6px 0px inset, rgb(31, 1, 255) -3px -3px 6px 1px inset;    
 }
 @media (max-width:1000px) {
+    .score_container > ul >  li{
+        font-size: smaller;
+        width: 70%;
+    }
     .score_container > ul{
-        width: 90%;
+        width: 100%;
         display: grid;
         gap:20px;
         padding:5%;
@@ -24,7 +28,7 @@
         grid-template-columns: repeat(3, minmax(70px, 1fr));
     }
     .score_container{
-        width:90%;
+        width:100%;
         margin: 5% auto;
         padding: 0;
     }

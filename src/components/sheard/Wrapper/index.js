@@ -1,4 +1,5 @@
 import { Typography, Flex } from 'antd';
+
 import './index.css';
 
 const { Title } = Typography;

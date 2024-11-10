@@ -6,11 +6,13 @@ import { changeFifty } from "../../state_management/slice/helperButtonsSlice"
 import DefeatModal from "../../components/sheard/DefeatModal";
 import { sendEmail } from "../../core/functions/emailLetter";
 import MoneyScore from "../../components/sheard/MoneyScore";
-import './index.css';
 import { AuthContext } from "../../context/authContextProvider";
 import Buttons from "../../components/sheard/Buttons";
 import { addQuestion } from "../../core/functions/sendDataToBackend";
 import { getTrueAnswer } from "../../core/functions/getTrueAnswer";
+import { playAudio } from "../../core/functions/audioPlay";
+
+import './index.css';
 
 const { Title } = Typography;
 
@@ -25,10 +27,16 @@ const MainGame = () => {
         if(correct){
             dispatch(addCoins());
             addQuestion(userProfileInfo.uid, questions[questionIndex].question, getTrueAnswer(fifty_fifty), quizId, coins, true);
+            playAudio('win');
         }else{
             addQuestion(userProfileInfo.uid, questions[questionIndex].question, fifty_fifty[choosenAnswer], quizId);
-            dispatch(changeModalOpen(true));  
+            dispatch(changeModalOpen(true));
             sendEmail(userProfileInfo.email, coins);
+            if(coins>=3){
+                playAudio('notmilion');
+            }else{
+                playAudio('fail');
+            }
     }
     };
 
@@ -38,14 +46,17 @@ const MainGame = () => {
     }
     },[questions, questionIndex, dispatch]);
 
+    useEffect(() => {
+        if(coins === 11){
+            dispatch(changeModalOpen(true));
+            sendEmail(userProfileInfo.email, coins);
+            playAudio('milion')
+        }
+    }, [coins, dispatch, userProfileInfo.email])
+    
     if (!questions || questions.length === 0 || !fifty_fifty) {
         return <Title level={5}>Loading questions...</Title>
     };
-
-    if(coins === 11){
-        dispatch(changeModalOpen(true));
-        sendEmail(userProfileInfo.email, coins);
-    }
 
     return (<Flex align="center" justify='center' className="game_container" gap={20}> 
         <Flex className='Title_Container' align="center" justify="center">

@@ -16,14 +16,14 @@ const { useToken } = theme;
 
 const DropDown = () => {
     const { userProfileInfo, setIsAuth, isAuth } = useContext(AuthContext);
-    const [ isinMain, setIsInMine ] = useState(false);
-    const location = useLocation();
-    const { submit } = useSelector(store => store.GameSlice);
     const { language } = useSelector(store => store.LanguageSlice);
-    const [coins, setCoins] = useState(0);
+    const { submit } = useSelector(store => store.GameSlice);
+    const [ isinMain, setIsInMine ] = useState(false);
     const [money, setMoney] = useState(0);
-    const { token } = useToken();
+    const [coins, setCoins] = useState(0);
+    const location = useLocation();
     const navigate = useNavigate();
+    const { token } = useToken();
 
     const handleSignOut = async () => {
         try {
@@ -45,18 +45,18 @@ const DropDown = () => {
             key:'logout',
             onClick:handleSignOut,
         }
-    ]
+    ];
 
     useEffect(()=>{
         setIsInMine(location.pathname === '/cabinet/maingame');
-    }, [location.pathname])
+    }, [location.pathname]);
 
     const getFullNameLetter = ({firstName, lastName}) => {
         if(firstName && lastName){
         return `${firstName[0]} ${lastName[0]}`;
         }
         return '-';
-    }
+    };
 
     useEffect(() => {
         const fetchedCoins = async () => {
@@ -69,7 +69,7 @@ const DropDown = () => {
             }
         }
         fetchedCoins();
-    },[submit, isAuth])
+    },[submit, isAuth, userProfileInfo.uid]);
 
     return (
         <Dropdown 

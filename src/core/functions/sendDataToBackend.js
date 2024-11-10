@@ -13,7 +13,6 @@ export const createQuestionDoc = async ( uid, quizId ) => {
     };
     try{
         await setDoc(quizRef, quizDoc);
-        console.log("Quiz data created successfully!");
     }catch(error){
         console.error("Error creating quiz document:", error);
     }
@@ -27,8 +26,8 @@ export const addQuestion = async ( uid, question, trueAnswer, quizId, currentCoi
         await setDoc(quizRef, {
             questions: arrayUnion({ [question]: trueAnswer}),
             }, {merge: true});
-        await setDoc(userRef, {
-            coins: increment(isTrue ? 1 : 0),
+       isTrue && await setDoc(userRef, {
+            coins: increment(1),
             money: increment(moneyArray[currentCoins].state ? moneyArray[currentCoins].money : 0)
         },{merge: true})
     }catch(error){
@@ -69,7 +68,6 @@ export const getUserCoinsandMoney = async (uid) => {
             const userData = docSnap.data();
             const coins = userData.coins || 0;
             const money = userData.money || 0;
-            console.log(money)
             return [coins, money];
         }else{
             return 0;

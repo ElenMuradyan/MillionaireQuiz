@@ -6,11 +6,11 @@ import { changeSubmit, changeQuestionIndex } from "../../../state_management/sli
 import './index.css';
 
 const Buttons = () => {
-    const dispatch = useDispatch();
-    const { language } = useSelector(store => store.LanguageSlice);
     const { fifty_fifty_clicked, changeQuestionClicked, trueAnswer } = useSelector(store => store.HelperButtonsSlice);
     const { questions, submit, questionIndex } = useSelector(store => store.GameSlice);
-
+    const { language } = useSelector(store => store.LanguageSlice);
+    const dispatch = useDispatch();
+    
     const handleFiftyFifty = () => {
         const currentQuestion = questions[questionIndex];
         let trueAnswers = currentQuestion.answers.filter(answer => answer.isCorrect);

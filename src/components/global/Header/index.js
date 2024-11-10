@@ -6,9 +6,9 @@ import LanguageChange from "../../sheard/LanguageChange";
 import { AuthContext } from "../../../context/authContextProvider";
 
 const Header = () => {
-    const location = useLocation();
-    const { isAuth } = useContext(AuthContext);
     const [ isinMain, setIsInMine ] = useState(false);
+    const { isAuth } = useContext(AuthContext);
+    const location = useLocation();
 
     useEffect(() => {
         setIsInMine(location.pathname === '/cabinet/maingame')

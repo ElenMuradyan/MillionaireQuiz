@@ -14,13 +14,11 @@ import { setQuizId } from "../../state_management/slice/gameSlice";
 const { Title } = Typography;
 
 const GameStart = () => {
+    const { language } = useSelector(store => store.LanguageSlice);
+    const { quizId } = useSelector(store => store.GameSlice);
+    const { userProfileInfo } = useContext(AuthContext);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { quizId } = useSelector(store => store.GameSlice);
-    const { language } = useSelector(store => store.LanguageSlice);
-
-    console.log(language)
-    const { userProfileInfo } = useContext(AuthContext);
 
     const handleStartGame = () => {
         dispatch(render());

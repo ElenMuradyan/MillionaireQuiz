@@ -10,13 +10,15 @@ import { changeMessage, render } from "../../../state_management/slice/gameSlice
 const { Title } = Typography;
 
 const DefeatModal = ({ open, onCancel }) => {
-    const dispatch = useDispatch();
-    const { message } = useSelector(store => store.GameSlice );
-    const { firstName } = useContext(AuthContext);
-    const { coins } = useSelector(store => store.GameSlice);
-    const navigate = useNavigate();
     const { language } = useSelector(store => store.LanguageSlice);
+    const { message } = useSelector(store => store.GameSlice );
+    const { coins } = useSelector(store => store.GameSlice);
+    const { userProfileInfo } = useContext(AuthContext);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const { firstName } = userProfileInfo;
+    
     const handleDefeat = useCallback(() => {
         switch(true) {
             case coins < 3:
@@ -34,7 +36,7 @@ const DefeatModal = ({ open, onCancel }) => {
             default:
                 dispatch(changeMessage("Unexpected coin value."));
         }
-    }, [coins, firstName, dispatch]);
+    }, [coins, firstName, dispatch, language]);
 
     useEffect(() => {
         if (open) {
