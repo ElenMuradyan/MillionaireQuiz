@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAVVMZDxnX-gVuidponNJYkvBpyf8HRe9c",
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: "millionaire-quiz-f13b5.firebaseapp.com",
   projectId: "millionaire-quiz-f13b5",
   storageBucket: "millionaire-quiz-f13b5.firebasestorage.app",
